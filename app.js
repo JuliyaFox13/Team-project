@@ -19,21 +19,23 @@ let score_title = document.querySelector(".score_title");
 // Setting initial game state to start
 let game_state = "Start";
 
+// Змінив умову початку гри з клавіші "Ентер" на кнопку "Старт"
+
 // Add an eventlistener for key presses
-document.addEventListener("keydown", (e) => {
-  // Start the game if enter key is pressed
-  if (e.key == "Enter" && game_state != "Play") {
-    document.querySelectorAll(".pipe_sprite").forEach((e) => {
-      e.remove();
-    });
-    bird.style.top = "40vh";
-    game_state = "Play";
-    message.innerHTML = "";
-    score_title.innerHTML = "Score : ";
-    score_val.innerHTML = "0";
-    play();
-  }
-});
+// document.addEventListener("keydown", (e) => {
+//   // Start the game if enter key is pressed
+//   if (e.key == "Enter" && game_state != "Play") {
+//     document.querySelectorAll(".pipe_sprite").forEach((e) => {
+//       e.remove();
+//     });
+//     bird.style.top = "40vh";
+//     game_state = "Play";
+//     message.innerHTML = "";
+//     score_title.innerHTML = "Score : ";
+//     score_val.innerHTML = "0";
+//     play();
+//   }
+// });
 function play() {
   function move() {
     // Detect if game has ended
@@ -55,13 +57,31 @@ function play() {
           bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
           bird_props.left + bird_props.width > pipe_sprite_props.left &&
           bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
-          bird_props.top + bird_props.height > pipe_sprite_props.top
+          bird_props.top + bird_props.height > pipe_sprite_props.top 
+
+          // Переніс сюди умову зіткнення з границями екрану
+          || bird_props.top <= 0 || bird_props.bottom >= background.bottom
         ) {
           // Change game state and end the game
           // if collision occurs
+          // Завершення гри
           game_state = "End";
-          message.innerHTML = "Press Enter To Restart";
-          message.style.left = "28vw";
+
+          // видалення труб
+          pipe_sprite.forEach((element) => {
+          element.remove()});
+          // відображення вікна
+          endBlock.style.display = "block";
+          // приховування рахунку у грі
+          score_val.style.display = "none";
+          score_title.style.display = "none";
+          // відображення рахунку у вікні
+          let scoreBlock = document.querySelector("#end h3 span");
+          scoreBlock.innerText = score_val.innerText;
+
+
+          // message.innerHTML = "Press Enter To Restart";
+          // message.style.left = "28vw";
           return;
         } else {
           // Increase the score if player
@@ -71,7 +91,8 @@ function play() {
             pipe_sprite_props.right + move_speed >= bird_props.left &&
             element.increase_score == "1"
           ) {
-            score_val.innerHTML = +score_val.innerHTML + 1;
+            // тут замінив innerHTML на innerText
+            score_val.innerText = +score_val.innerText + 1;
           }
           element.style.left = pipe_sprite_props.left - move_speed + "px";
         }
@@ -87,20 +108,23 @@ function play() {
     if (game_state != "Play") return;
     bird_dy = bird_dy + gravity;
     document.addEventListener("keydown", (e) => {
-      if (e.key == "ArrowUp" || e.key == " ") {
+      // Замінив кнопку польоту на "Ентер"
+      if (e.key == "Enter" || e.key == "click") {
         bird_dy = -7.6;
       }
     });
 
+// Цю умову додав до умов зіткнення з трубами
+
     // Collision detection with bird and
     // window top and bottom
 
-    if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
-      game_state = "End";
-      message.innerHTML = "Press Enter To Restart";
-      message.style.left = "28vw";
-      return;
-    }
+    // if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
+    //   game_state = "End";
+    //   message.innerHTML = "Press Enter To Restart";
+    //   message.style.left = "28vw";
+    //   return;
+    // }
     bird.style.top = bird_props.top + bird_dy + "px";
     bird_props = bird.getBoundingClientRect();
     requestAnimationFrame(apply_gravity);
@@ -142,4 +166,37 @@ function play() {
     requestAnimationFrame(create_pipe);
   }
   requestAnimationFrame(create_pipe);
+}
+
+
+// Створення вікна початку гри
+let startButton = document.querySelector("#start button");
+let startBlock = document.querySelector("#start");
+let gameBlock = document.querySelector("#game");
+let endBlock = document.querySelector("#end");
+let restartButton = document.querySelector("#end button") 
+
+// Кнопка старт
+startButton.onclick = function() {
+  startGame();
+}
+
+// Кнопка рестарт
+restartButton.onclick = function() {
+  location.reload()
+}
+
+// Початок игры
+function startGame() {
+  startBlock.style.display = "none";
+// Переніс сюди умови початку гри
+  document.querySelectorAll(".pipe_sprite").forEach((e) => {
+    e.remove();
+  });
+  bird.style.top = "40vh";
+  game_state = "Play";
+  // message.innerHTML = "";
+  score_title.innerText = "Score : ";
+  score_val.innerText = "0";
+  play();
 }

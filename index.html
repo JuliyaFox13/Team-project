@@ -8,12 +8,26 @@
 <body>
     <div class="background"></div>
     <img class="bird" src="images/bird_1.png" alt="bird-img">
-    <div class="message">
+    <!-- <div class="message"">
         Press Enter To Start Game
-    </div>
+    </div> -->
     <div class="score">
         <span class="score_title"></span>
         <span class="score_val"></span>
+    </div>
+
+
+    <!-- Вікно початку гри -->
+    <div id="start">
+        <h2>Полетели!</h2>
+        <button>Start</button>
+    </div>
+
+    <!-- Вікно завершення гри -->
+    <div id="end" style="display: none">
+        <h2>Вы проиграли</h2>
+        <h3>Вы набрали: <span>0</span></h3>
+        <button>Restart</button>
     </div>
     <script src="app.js"></script>
 </body>
