@@ -10,6 +10,7 @@ let bird = document.querySelector(".bird");
 // Getting bird element properties
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
+let ground = document.querySelector(".ground").getBoundingClientRect();
 
 // Getting reference to the score element
 let score_val = document.querySelector(".score_val");
@@ -18,6 +19,28 @@ let score_title = document.querySelector(".score_title");
 
 // Setting initial game state to start
 let game_state = "Start";
+
+//Block audio
+
+let audio_1 = document.getElementById("audio_1");
+let audio_2 = document.getElementById("audio_2");
+let audio_3 = document.getElementById("audio_3");
+
+let startAudio = setTimeout(audio_1.play(), 500);
+
+function gameAudio() {
+  audio_1.pause();
+  audio_2.play();
+}
+
+function endAudio() {
+  audio_2.pause();
+  if (endBlock.style.display == "block") {
+    audio_3.play();
+  } else {
+    audio_3.pause();
+  }
+}
 
 // Змінив умову початку гри з клавіші "Ентер" на кнопку "Старт"
 
@@ -60,7 +83,7 @@ function play() {
             bird_props.top + bird_props.height > pipe_sprite_props.top) ||
           // Переніс сюди умову зіткнення з границями екрану
           bird_props.top <= 0 ||
-          bird_props.bottom >= background.bottom
+          bird_props.bottom >= ground.bottom
         ) {
           // Change game state and end the game
           // if collision occurs
@@ -73,6 +96,7 @@ function play() {
           });
           // відображення вікна
           endBlock.style.display = "block";
+          endAudio();
           // приховування рахунку у грі
           score_val.style.display = "none";
           score_title.style.display = "none";
@@ -177,6 +201,7 @@ let restartButton = document.querySelector("#end button");
 // Кнопка старт
 startButton.onclick = function () {
   startGame();
+  gameAudio();
 };
 
 // Кнопка рестарт
@@ -187,6 +212,7 @@ restartButton.onclick = function () {
 // Початок игры
 function startGame() {
   startBlock.style.display = "none";
+
   // Переніс сюди умови початку гри
   document.querySelectorAll(".pipe_sprite").forEach((e) => {
     e.remove();

@@ -19,7 +19,7 @@ body {
         background-image: url(images/fg.png);
         background-size: cover;
         background-position: bottom;
-        background-repeat: repeat;
+        background-repeat: no-repeat;
 }
 .background {
     height:90vh ;
