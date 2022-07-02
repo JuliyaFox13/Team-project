@@ -54,13 +54,13 @@ function play() {
       } else {
         // Collision detection with bird and pipes
         if (
-          bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
-          bird_props.left + bird_props.width > pipe_sprite_props.left &&
-          bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
-          bird_props.top + bird_props.height > pipe_sprite_props.top 
-
+          (bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
+            bird_props.left + bird_props.width > pipe_sprite_props.left &&
+            bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
+            bird_props.top + bird_props.height > pipe_sprite_props.top) ||
           // Переніс сюди умову зіткнення з границями екрану
-          || bird_props.top <= 0 || bird_props.bottom >= background.bottom
+          bird_props.top <= 0 ||
+          bird_props.bottom >= background.bottom
         ) {
           // Change game state and end the game
           // if collision occurs
@@ -69,7 +69,8 @@ function play() {
 
           // видалення труб
           pipe_sprite.forEach((element) => {
-          element.remove()});
+            element.remove();
+          });
           // відображення вікна
           endBlock.style.display = "block";
           // приховування рахунку у грі
@@ -78,7 +79,6 @@ function play() {
           // відображення рахунку у вікні
           let scoreBlock = document.querySelector("#end h3 span");
           scoreBlock.innerText = score_val.innerText;
-
 
           // message.innerHTML = "Press Enter To Restart";
           // message.style.left = "28vw";
@@ -114,7 +114,7 @@ function play() {
       }
     });
 
-// Цю умову додав до умов зіткнення з трубами
+    // Цю умову додав до умов зіткнення з трубами
 
     // Collision detection with bird and
     // window top and bottom
@@ -134,7 +134,7 @@ function play() {
   let pipe_seperation = 0;
 
   // Constant value for the gap between two pipes
-  let pipe_gap = 20;
+  let pipe_gap = 35;
   function create_pipe() {
     if (game_state != "Play") return;
 
@@ -142,7 +142,7 @@ function play() {
     // if distance between two pipe has exceeded
     // a predefined value
     if (pipe_seperation > 115) {
-      pipe_seperation = 0;
+      pipe_seperation = 10;
 
       // Calculate random position of pipes on y axis
       let pipe_posi = Math.floor(Math.random() * 43) + 8;
@@ -168,27 +168,26 @@ function play() {
   requestAnimationFrame(create_pipe);
 }
 
-
 // Створення вікна початку гри
 let startButton = document.querySelector("#start button");
 let startBlock = document.querySelector("#start");
 let endBlock = document.querySelector("#end");
-let restartButton = document.querySelector("#end button") 
+let restartButton = document.querySelector("#end button");
 
 // Кнопка старт
-startButton.onclick = function() {
+startButton.onclick = function () {
   startGame();
-}
+};
 
 // Кнопка рестарт
-restartButton.onclick = function() {
-  location.reload()
-}
+restartButton.onclick = function () {
+  location.reload();
+};
 
 // Початок игры
 function startGame() {
   startBlock.style.display = "none";
-// Переніс сюди умови початку гри
+  // Переніс сюди умови початку гри
   document.querySelectorAll(".pipe_sprite").forEach((e) => {
     e.remove();
   });

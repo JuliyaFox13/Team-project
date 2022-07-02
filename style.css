@@ -17,8 +17,8 @@ body {
 }
 
 .bird {
-    height: 100px;
-    width: 100px;
+    height: 60px;
+    width: 60px;
     position: fixed;
     top: 40vh;
     left: 30vw;
@@ -31,7 +31,7 @@ body {
     top: 40vh;
     left: 100vw;
     height: 70vh;
-    width: 120px;
+    width: 100px;
     background: url(images/pipeBottom.png);
     background-size: cover;
 }
