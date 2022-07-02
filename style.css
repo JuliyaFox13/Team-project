@@ -9,12 +9,29 @@ body {
     width: 100vw;
 }
 
-.background {
+.game{
     height: 100vh;
-    width: 100vw;
-    background: url(images/bg.png);
-    background-size: cover;
+    width: 100vh;
 }
+.ground {
+    height: 10vh;
+        width: 100vw;
+        background-image: url(images/fg.png);
+        background-size: cover;
+        background-position: bottom;
+        background-repeat: repeat;
+}
+.background {
+    height:90vh ;
+    width: 100vw;
+    background-image: url(images/bg.png) ;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+       
+        
 
 .bird {
     height: 60px;
