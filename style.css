@@ -47,20 +47,20 @@ body {
     left: 20vw;
     text-align: center;
 }
-
+/*внесено зміни в лічильник балів*/
 .score {
     position: fixed;
     z-index: 10;
-    height: 10vh;
-    font-size: 10vh;
-    font-weight: 100;
-    color: goldenrod;
+    height: 8vh;
+    font-size: 8vh;
+    font-weight: 80;
+    color:  hwb(0 24% 43% / 0.918);
     top: 0;
-    left: 0;
+    left: 3vh;
 }
 
 .score_val {
-    color: gold;
+    color: hwb(0 4% 5% / 0.8);
 }
 
 /* Вікна початку і завершення гри */

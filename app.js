@@ -1,5 +1,5 @@
-// Background scrolling speed
-let move_speed = 3;
+// Встановлюємо швидкість руху
+let move_speed = 4;
 
 // Gravity constant value
 let gravity = 0.5;
@@ -195,7 +195,8 @@ function startGame() {
   bird.style.top = "40vh";
   game_state = "Play";
   // message.innerHTML = "";
-  score_title.innerText = "Score : ";
+  //Лічильник балів
+  score_title.innerText = "Бали : ";
   score_val.innerText = "0";
   play();
 }
