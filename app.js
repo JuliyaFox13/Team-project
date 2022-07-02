@@ -109,7 +109,7 @@ function play() {
     bird_dy = bird_dy + gravity;
     document.addEventListener("keydown", (e) => {
       // Замінив кнопку польоту на "Ентер"
-      if (e.key == "Enter" || e.key == "click") {
+      if (e.key == "Enter" || e.key == " ") {
         bird_dy = -7.6;
       }
     });
@@ -134,7 +134,7 @@ function play() {
   let pipe_seperation = 0;
 
   // Constant value for the gap between two pipes
-  let pipe_gap = 35;
+  let pipe_gap = 20;
   function create_pipe() {
     if (game_state != "Play") return;
 
@@ -172,7 +172,6 @@ function play() {
 // Створення вікна початку гри
 let startButton = document.querySelector("#start button");
 let startBlock = document.querySelector("#start");
-let gameBlock = document.querySelector("#game");
 let endBlock = document.querySelector("#end");
 let restartButton = document.querySelector("#end button") 
 
