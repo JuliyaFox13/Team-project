@@ -65,7 +65,7 @@ function play() {
     if (game_state != "Play") return;
 
     // Getting reference to all the pipe elements
-    let pipe_sprite = document.querySelectorAll(".pipe_sprite");
+    let pipe_sprite = document.querySelectorAll(".pipe");
     pipe_sprite.forEach((element) => {
       let pipe_sprite_props = element.getBoundingClientRect();
       bird_props = bird.getBoundingClientRect();
@@ -80,10 +80,10 @@ function play() {
           (bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
             bird_props.left + bird_props.width > pipe_sprite_props.left &&
             bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
-            bird_props.top + bird_props.height > pipe_sprite_props.top) ||
-          // Переніс сюди умову зіткнення з границями екрану
-          bird_props.top <= 0 ||
-          bird_props.bottom >= ground.bottom
+            bird_props.top + bird_props.height > pipe_sprite_props.top ||
+            bird_props.top <= 0 ||
+            bird_props.bottom >= background.bottom)
+
         ) {
           // Change game state and end the game
           // if collision occurs
@@ -171,14 +171,14 @@ function play() {
       // Calculate random position of pipes on y axis
       let pipe_posi = Math.floor(Math.random() * 43) + 8;
       let pipe_sprite_inv = document.createElement("div");
-      pipe_sprite_inv.className = "pipe_sprite";
+      pipe_sprite_inv.className = "pipe_sprite_inv pipe";
       pipe_sprite_inv.style.top = pipe_posi - 70 + "vh";
       pipe_sprite_inv.style.left = "100vw";
 
       // Append the created pipe element in DOM
       document.body.appendChild(pipe_sprite_inv);
       let pipe_sprite = document.createElement("div");
-      pipe_sprite.className = "pipe_sprite";
+      pipe_sprite.className = "pipe_sprite pipe";
       pipe_sprite.style.top = pipe_posi + pipe_gap + "vh";
       pipe_sprite.style.left = "100vw";
       pipe_sprite.increase_score = "1";
