@@ -1,32 +1,32 @@
 // Встановлюємо швидкість руху
 let move_speed = 4;
 
-// Gravity constant value
+// Значення сили тяжіння
 let gravity = 0.5;
 
-// Getting reference to the bird element
+// Отримання посилання на елемент bird
 let bird = document.querySelector(".bird");
 
-// Getting bird element properties
+// Отримання властивостей елементів пташки та фону
 let bird_props = bird.getBoundingClientRect();
 let background = document.querySelector(".background").getBoundingClientRect();
 let ground = document.querySelector(".ground").getBoundingClientRect();
 
-// Getting reference to the score element
+//властивості елементу лічильника балів
 let score_val = document.querySelector(".score_val");
 let message = document.querySelector(".message");
 let score_title = document.querySelector(".score_title");
 
-// Setting initial game state to start
+//Встановлення початкового стану гри для старту гри
 let game_state = "Start";
 
-//Block audio
+// Аудіосупровід
 
 let audio_1 = document.getElementById("audio_1");
 let audio_2 = document.getElementById("audio_2");
 let audio_3 = document.getElementById("audio_3");
 
-let startAudio = setTimeout(audio_1.play(), 500);
+let startAudio = setTimeout(audio_1.play(), 1500);
 
 function gameAudio() {
   audio_1.pause();
@@ -42,51 +42,31 @@ function endAudio() {
   }
 }
 
-// Змінив умову початку гри з клавіші "Ентер" на кнопку "Старт"
-
-// Add an eventlistener for key presses
-// document.addEventListener("keydown", (e) => {
-//   // Start the game if enter key is pressed
-//   if (e.key == "Enter" && game_state != "Play") {
-//     document.querySelectorAll(".pipe_sprite").forEach((e) => {
-//       e.remove();
-//     });
-//     bird.style.top = "40vh";
-//     game_state = "Play";
-//     message.innerHTML = "";
-//     score_title.innerHTML = "Score : ";
-//     score_val.innerHTML = "0";
-//     play();
-//   }
-// });
+//
 function play() {
   function move() {
-    // Detect if game has ended
+    //Визначити, чи гра закінчилася
     if (game_state != "Play") return;
 
-    // Getting reference to all the pipe elements
+    //Отримання посилання на елемент pipe
     let pipe_sprite = document.querySelectorAll(".pipe");
     pipe_sprite.forEach((element) => {
       let pipe_sprite_props = element.getBoundingClientRect();
       bird_props = bird.getBoundingClientRect();
 
-      // Delete the pipes if they have moved out
-      // of the screen hence saving memory
+      // Видалити труби, якщо вони вийшли за межі екрану
       if (pipe_sprite_props.right <= 0) {
         element.remove();
       } else {
-        // Collision detection with bird and pipes
+        //Умови зіткнення пташки з колонами
         if (
           (bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
             bird_props.left + bird_props.width > pipe_sprite_props.left &&
             bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
-            bird_props.top + bird_props.height > pipe_sprite_props.top ||
-            bird_props.top <= 0 ||
-            bird_props.bottom >= background.bottom)
-
+            bird_props.top + bird_props.height > pipe_sprite_props.top) ||
+          bird_props.top <= 0 ||
+          bird_props.bottom >= background.bottom
         ) {
-          // Change game state and end the game
-          // if collision occurs
           // Завершення гри
           game_state = "End";
 
@@ -103,52 +83,36 @@ function play() {
           // відображення рахунку у вікні
           let scoreBlock = document.querySelector("#end h3 span");
           scoreBlock.innerText = score_val.innerText;
-
-          // message.innerHTML = "Press Enter To Restart";
-          // message.style.left = "28vw";
           return;
         } else {
-          // Increase the score if player
-          // has the successfully dodged the
+          //Збільште рахунок, якщо пташка пролетіла між колонами
           if (
             pipe_sprite_props.right < bird_props.left &&
             pipe_sprite_props.right + move_speed >= bird_props.left &&
             element.increase_score == "1"
           ) {
-            // тут замінив innerHTML на innerText
             score_val.innerText = +score_val.innerText + 1;
           }
           element.style.left = pipe_sprite_props.left - move_speed + "px";
         }
       }
     });
-
+    //Анімація колон
     requestAnimationFrame(move);
   }
   requestAnimationFrame(move);
-
+  //Умови польоту пташки
   let bird_dy = 0;
+
   function apply_gravity() {
     if (game_state != "Play") return;
     bird_dy = bird_dy + gravity;
     document.addEventListener("keydown", (e) => {
-      // Замінив кнопку польоту на "Ентер"
       if (e.key == "Enter" || e.key == " ") {
         bird_dy = -7.6;
       }
     });
 
-    // Цю умову додав до умов зіткнення з трубами
-
-    // Collision detection with bird and
-    // window top and bottom
-
-    // if (bird_props.top <= 0 || bird_props.bottom >= background.bottom) {
-    //   game_state = "End";
-    //   message.innerHTML = "Press Enter To Restart";
-    //   message.style.left = "28vw";
-    //   return;
-    // }
     bird.style.top = bird_props.top + bird_dy + "px";
     bird_props = bird.getBoundingClientRect();
     requestAnimationFrame(apply_gravity);
@@ -157,25 +121,23 @@ function play() {
 
   let pipe_seperation = 0;
 
-  // Constant value for the gap between two pipes
+  //Проміжок між трубами
   let pipe_gap = 35;
   function create_pipe() {
     if (game_state != "Play") return;
 
-    // Create another set of pipes
-    // if distance between two pipe has exceeded
-    // a predefined value
+    //Створення нових пар колон якщо відстань між іншими парами перебільшено
     if (pipe_seperation > 115) {
-      pipe_seperation = 10;
+      pipe_seperation = 5;
 
-      // Calculate random position of pipes on y axis
+      // Рандомне значення проміжку між колонами
       let pipe_posi = Math.floor(Math.random() * 43) + 8;
       let pipe_sprite_inv = document.createElement("div");
       pipe_sprite_inv.className = "pipe_sprite_inv pipe";
       pipe_sprite_inv.style.top = pipe_posi - 70 + "vh";
       pipe_sprite_inv.style.left = "100vw";
 
-      // Append the created pipe element in DOM
+      //Створення колон
       document.body.appendChild(pipe_sprite_inv);
       let pipe_sprite = document.createElement("div");
       pipe_sprite.className = "pipe_sprite pipe";
@@ -183,7 +145,6 @@ function play() {
       pipe_sprite.style.left = "100vw";
       pipe_sprite.increase_score = "1";
 
-      // Append the created pipe element in DOM
       document.body.appendChild(pipe_sprite);
     }
     pipe_seperation++;

@@ -37,8 +37,8 @@ position: absolute;
 
 
 .bird {
-    height: 60px;
-    width: 60px;
+    height: 14vh;
+    width: 7vw;
     position: fixed;
     top: 40vh;
     left: 30vw;
