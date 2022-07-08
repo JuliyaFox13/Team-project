@@ -1,3 +1,85 @@
+@-webkit-keyframes animGr {
+    0% {
+        background-position: 0px 0px;
+    }
+
+    100% {
+        background-position: -335px 0px;
+    }
+}
+
+@-moz-keyframes animGr {
+    0% {
+        background-position: 0px 0px;
+    }
+
+    100% {
+        background-position: -335px 0px;
+    }
+}
+
+@-o-keyframes animGr{
+    0% {
+        background-position: 0px 0px;
+    }
+
+    100% {
+        background-position: -335px 0px;
+    }
+}
+
+@keyframes animGr{
+    0% {
+        background-position: 0px 0px;
+    }
+
+    100% {
+        background-position: -335px 0px;
+    }
+}
+
+@-webkit-keyframes animBg {
+    0% {
+        background-position: 0px 100%;
+    }
+
+    100% {
+        background-position: -275px 100%;
+    }
+}
+
+@-moz-keyframes animBg{
+    0% {
+        background-position: 0px 100%;
+    }
+
+    100% {
+        background-position: -275px 100%;
+    }
+}
+
+@-o-keyframes animBg{
+    0% {
+        background-position: 0px 100%;
+    }
+
+    100% {
+        background-position: -275px 100%;
+    }
+}
+
+@keyframes animBg {
+    0% {
+        background-position: 0px 100%;
+    }
+
+    100% {
+        background-position: -275px 100%;
+    }
+}
+
+
+
 * {
     margin: 0;
     padding: 0;
@@ -23,6 +105,8 @@ body {
     bottom: 0;
     width: 100%;
     height: 10%;
+    -webkit-animation: animGr 2516ms linear infinite;
+        animation: animGr 2516ms linear infinite;
 }
 
 .background {
@@ -34,6 +118,8 @@ body {
     background-size: cover;
     background-repeat: repeat-x;
     background-position: 0px 100%;
+    -webkit-animation: animBg 7s linear infinite;
+        animation: animBg 7s linear infinite;
 }
 
 .bird {
