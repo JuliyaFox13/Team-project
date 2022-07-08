@@ -20,11 +20,44 @@ let score_title = document.querySelector(".score_title");
 //Встановлення початкового стану гри для старту гри
 let game_state = "Start";
 
+// Створення вікна початку гри
+let startButton = document.querySelector("#start button");
+let startBlock = document.querySelector("#start");
+let endBlock = document.querySelector("#end");
+let restartButton = document.querySelector("#end button");
+
+// Кнопка старт
+startButton.onclick = function () {
+  startGame();
+  gameAudio();
+};
+
+// Початок игры
+function startGame() {
+  startBlock.style.display = "none";
+
+  // Переніс сюди умови початку гри
+  document.querySelectorAll(".pipe_sprite").forEach((e) => {
+    e.remove();
+  });
+  bird.style.top = "40vh";
+  game_state = "Play";
+  // message.innerHTML = "";
+  //Лічильник балів
+  score_title.innerText = "Балы : ";
+  score_val.innerText = "0";
+  play();
+}
+
 // Аудіосупровід
 
 let audio_1 = document.getElementById("audio_1");
 let audio_2 = document.getElementById("audio_2");
 let audio_3 = document.getElementById("audio_3");
+
+audio_1.volume = 0.1;
+audio_2.volume = 0.5;
+audio_3.volume = 0.1;
 
 let startAudio = setTimeout(audio_1.play(), 1500);
 
@@ -101,7 +134,7 @@ function play() {
     requestAnimationFrame(move);
   }
   requestAnimationFrame(move);
-  //Умови польоту пташки
+  //Умови польоту пташки при натисканні клавіші "Enter"/"пробіл"
   let bird_dy = 0;
 
   function apply_gravity() {
@@ -123,12 +156,13 @@ function play() {
 
   //Проміжок між трубами
   let pipe_gap = 35;
+
   function create_pipe() {
     if (game_state != "Play") return;
 
     //Створення нових пар колон якщо відстань між іншими парами перебільшено
     if (pipe_seperation > 115) {
-      pipe_seperation = 5;
+      pipe_seperation = 10;
 
       // Рандомне значення проміжку між колонами
       let pipe_posi = Math.floor(Math.random() * 43) + 8;
@@ -153,36 +187,7 @@ function play() {
   requestAnimationFrame(create_pipe);
 }
 
-// Створення вікна початку гри
-let startButton = document.querySelector("#start button");
-let startBlock = document.querySelector("#start");
-let endBlock = document.querySelector("#end");
-let restartButton = document.querySelector("#end button");
-
-// Кнопка старт
-startButton.onclick = function () {
-  startGame();
-  gameAudio();
-};
-
 // Кнопка рестарт
 restartButton.onclick = function () {
   location.reload();
 };
-
-// Початок игры
-function startGame() {
-  startBlock.style.display = "none";
-
-  // Переніс сюди умови початку гри
-  document.querySelectorAll(".pipe_sprite").forEach((e) => {
-    e.remove();
-  });
-  bird.style.top = "40vh";
-  game_state = "Play";
-  // message.innerHTML = "";
-  //Лічильник балів
-  score_title.innerText = "Бали : ";
-  score_val.innerText = "0";
-  play();
-}
